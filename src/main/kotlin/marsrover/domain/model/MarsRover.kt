@@ -2,6 +2,7 @@ package marsrover.domain.model
 
 import marsrover.domain.value.Coordinate
 import marsrover.domain.value.DirectionType
+import marsrover.domain.value.asMapCoordinateOf
 
 data class MarsRover(var currentDirection: DirectionType,
                      var currentPosition: Coordinate,
@@ -16,11 +17,11 @@ data class MarsRover(var currentDirection: DirectionType,
 
     fun moveForward() {
         val nextPosition = currentDirection.moveForwardFrom(currentPosition)
-        currentPosition = map.getAsValidPosition(nextPosition)
+        currentPosition = nextPosition.asMapCoordinateOf(this.map)
     }
 
     fun moveBackward() {
         val nextPosition = currentDirection.moveBackwardFrom(currentPosition)
-        currentPosition = map.getAsValidPosition(nextPosition)
+        currentPosition = nextPosition.asMapCoordinateOf(this.map)
     }
 }
