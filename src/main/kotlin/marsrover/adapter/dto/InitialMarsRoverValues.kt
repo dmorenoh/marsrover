@@ -1,9 +1,15 @@
 package marsrover.adapter.dto
 
-data class InitialMarsRoverValues(val mapSizeValue: MapSizeValue,
-                                  val initialPosition: CoordinateValue,
-                                  val initialDirection: String,
-                                  val obstacleValues: List<CoordinateValue>)
+import marsrover.domain.command.CreateMarsRoversCommand
+import marsrover.domain.model.*
 
-data class MapSizeValue(val maxX: Int = 0, val maxY: Int = 0)
-data class CoordinateValue(val positionX: Int, val positionY: Int)
+data class InitialMarsRoverValues(private val mapSizeValue: MapSizeValue,
+                                  private val initialPosition: CoordinateValue,
+                                  private val initialDirection: String,
+                                  private val obstacleValues: List<CoordinateValue>) {
+    fun toCreateMarsRoversCommand() = CreateMarsRoversCommand(
+            MarsRoverMap(this.mapSizeValue.toArea(), obstacleValues.toObstacles()),
+            initialPosition.toCoordinate(),
+            DirectionType.getEnum(initialDirection)
+    )
+}

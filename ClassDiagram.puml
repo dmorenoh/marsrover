@@ -1,0 +1,46 @@
+@startuml
+
+abstract class AbstractList
+abstract AbstractCollection
+interface List
+interface Collection
+
+List <|-- AbstractList
+Collection <|-- AbstractCollection
+
+Collection <|- List
+AbstractCollection <|- AbstractList
+AbstractList <|-- ArrayList
+
+class ArrayList {
+Object[] elementData
+size()
+}
+
+enum MovementInstructionType {
+TURN_LEFT
+TURN_RIGHT
+FORWARD
+BACKWARD
+}
+
+class MarsRoverMap {
+    area
+    obstacles
+}
+
+
+enum DirectionType{
+    SOUTH
+    NORTH
+    EAST
+    WEST
+}
+
+class MarsRover {
+    currentDirection: DirectionType
+    currentPosition: Coordinate
+    map: MarsRoverMap
+}
+
+@enduml

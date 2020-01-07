@@ -15,10 +15,9 @@ class DefaultMarsRoverCommandHandler(var repository: MarsRoverRepository) : Mars
 
         println(String
                 .format(
-                        "Rover is at x:%d y:%d facing:%s",
-                        marsRover.currentPosition.xPoint,
-                        marsRover.currentPosition.yPoint,
-                        marsRover.currentDirection.value
+                        "Rover is at %s %s",
+                        marsRover.currentPositionAsString(),
+                        marsRover.currentDirectionAsString()
                 ))
     }
 

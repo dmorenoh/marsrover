@@ -1,7 +1,6 @@
 package marsrover.adapter
 
 import marsrover.adapter.dto.InitialMarsRoverValues
-import marsrover.adapter.dto.toCreateMarsRoversCommand
 import marsrover.api.handler.MarsRoverCommandHandler
 import marsrover.domain.command.MoveMarsRoverCommand
 
@@ -14,5 +13,4 @@ class MarsRoverAdapter(private val handlerDefault: MarsRoverCommandHandler) {
     fun moveMarsRover(command: String) {
         handlerDefault.on(MoveMarsRoverCommand(command))
     }
-
 }

@@ -1,18 +1,16 @@
 package marsrover.api.handler
 
-import marsrover.domain.MarsRoverException
 import marsrover.domain.command.CreateMarsRoversCommand
 import marsrover.domain.command.MoveMarsRoverCommand
-import marsrover.domain.model.MarsRover
-import marsrover.domain.model.MarsRoverMap
+import marsrover.domain.exception.MarsRoverMapException
+import marsrover.domain.exception.MarsRoverException
+import marsrover.domain.model.*
 import marsrover.domain.repo.MarsRoverRepository
-import marsrover.domain.value.Coordinate
-import marsrover.domain.value.MapSize
 import marsrover.infra.repo.InMemoryRepository
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static marsrover.domain.value.DirectionType.getEnum
+import static marsrover.domain.model.DirectionType.getEnum
 
 class DefaultMarsRoverCommandHandlerSpec extends Specification {
     private static final String NORTH = "n"
@@ -23,18 +21,19 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
     private static final String RIGHT = "r"
     private static final String NON_VALID = "any"
     private static final Coordinate INITIAL_POS = new Coordinate(0, 0)
-    private static final MarsRoverMap ANY_MAP = new MarsRoverMap(new MapSize(2, 2), Collections.emptyList())
-    public static final Coordinate OBSTACLE_FORWARD = new Coordinate(0, 1)
-    public static final Coordinate OBSTACLE_BACKWARD = new Coordinate(0, 5)
-    public static final String FORWARD = "f"
-    public static final String BACKWARD = "b"
+    private static final MarsRoverMap ANY_MAP = new MarsRoverMap(new Area(new Size(2), new Size(2)), Collections.emptyList())
+    private static final Coordinate OBSTACLE_FORWARD = new Coordinate(0, 1)
+    private static final Coordinate OBSTACLE_BACKWARD = new Coordinate(0, 5)
+    private static final String FORWARD = "f"
+    private static final String BACKWARD = "b"
+    public static final Area AREA_SIZE_5X5 = new Area(new Size(5), new Size(5))
     private MarsRoverRepository repository = new InMemoryRepository()
     def subject = new DefaultMarsRoverCommandHandler(repository)
 
     def "should save new mars rover"() {
         when: "request create mars rover"
             def command = new CreateMarsRoversCommand(
-                    new MarsRoverMap(new MapSize(5, 5), [OBSTACLE_BACKWARD, OBSTACLE_FORWARD]),
+                    new MarsRoverMap(AREA_SIZE_5X5, [OBSTACLE_BACKWARD, OBSTACLE_FORWARD]),
                     new Coordinate(0, 0),
                     getEnum("n"))
             subject.on(command)
@@ -74,8 +73,8 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
             subject.on(new MoveMarsRoverCommand(movementInstruction))
 
         then: "moved correctly"
-            marsRover.getCurrentDirection() == getEnum(expecteDirection)
-            marsRover.getCurrentPosition() == INITIAL_POS
+            marsRover.currentDirection == getEnum(expecteDirection)
+            marsRover.currentPosition == INITIAL_POS
 
         where:
             currentDirection | movementInstruction | expecteDirection
@@ -92,7 +91,7 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
     @Unroll
     def "should fail when mars rover attempts to move to #movementInstruction and there is an obstacle"() {
         given: "map with obstacles"
-            def mapWithObstacles = new MarsRoverMap(new MapSize(5, 5), [obstaclePosition])
+            def mapWithObstacles = new MarsRoverMap(AREA_SIZE_5X5, [obstaclePosition])
         and: "mars rovers using such map"
             def marsRover = new MarsRover(
                     getEnum(NORTH),
@@ -105,9 +104,9 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
             subject.on(new MoveMarsRoverCommand(movementInstruction))
 
         then: "fails and keeps position"
-            def ex = thrown(MarsRoverException)
+            def ex = thrown(MarsRoverMapException)
             ex.message == "Obstacle found in next position"
-            marsRover.getCurrentPosition() == INITIAL_POS
+            marsRover.currentPosition == INITIAL_POS
 
         where:
             movementInstruction | obstaclePosition
@@ -118,7 +117,7 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
     @Unroll
     def "should move to #expectedPosition when mars rovers addressed to #direction attempts to move to #movementInstruction and initial position is #initialPosition"() {
         given: "map without obstacles"
-            def mapWithObstacles = new MarsRoverMap(new MapSize(5, 5), Collections.emptyList())
+            def mapWithObstacles = new MarsRoverMap(AREA_SIZE_5X5, Collections.emptyList())
         and: "mars rovers using such map"
             def initialDirection = getEnum(direction)
             def marsRover = new MarsRover(
@@ -135,14 +134,14 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
             marsRover.currentPosition == expectedPosition
             marsRover.currentDirection == initialDirection
         where:
-            mapSize           | initialPosition      | direction | movementInstruction | expectedPosition
-            new MapSize(5, 5) | new Coordinate(0, 0) | NORTH     | FORWARD             | new Coordinate(0, 1)
-            new MapSize(5, 5) | new Coordinate(0, 0) | NORTH     | BACKWARD            | new Coordinate(0, 5)
-            new MapSize(5, 5) | new Coordinate(0, 5) | NORTH     | FORWARD             | new Coordinate(0, 0)
-            new MapSize(5, 5) | new Coordinate(0, 5) | NORTH     | BACKWARD            | new Coordinate(0, 4)
-            new MapSize(5, 5) | new Coordinate(0, 0) | SOUTH     | FORWARD             | new Coordinate(0, 5)
-            new MapSize(5, 5) | new Coordinate(0, 0) | SOUTH     | BACKWARD            | new Coordinate(0, 1)
-            new MapSize(5, 5) | new Coordinate(0, 5) | SOUTH     | FORWARD             | new Coordinate(0, 4)
-            new MapSize(5, 5) | new Coordinate(0, 5) | SOUTH     | BACKWARD            | new Coordinate(0, 0)
+            mapSize       | initialPosition      | direction | movementInstruction | expectedPosition
+            AREA_SIZE_5X5 | new Coordinate(0, 0) | NORTH     | FORWARD             | new Coordinate(0, 1)
+            AREA_SIZE_5X5 | new Coordinate(0, 0) | NORTH     | BACKWARD            | new Coordinate(0, 5)
+            AREA_SIZE_5X5 | new Coordinate(0, 5) | NORTH     | FORWARD             | new Coordinate(0, 0)
+            AREA_SIZE_5X5 | new Coordinate(0, 5) | NORTH     | BACKWARD            | new Coordinate(0, 4)
+            AREA_SIZE_5X5 | new Coordinate(0, 0) | SOUTH     | FORWARD             | new Coordinate(0, 5)
+            AREA_SIZE_5X5 | new Coordinate(0, 0) | SOUTH     | BACKWARD            | new Coordinate(0, 1)
+            AREA_SIZE_5X5 | new Coordinate(0, 5) | SOUTH     | FORWARD             | new Coordinate(0, 4)
+            AREA_SIZE_5X5 | new Coordinate(0, 5) | SOUTH     | BACKWARD            | new Coordinate(0, 0)
     }
 }

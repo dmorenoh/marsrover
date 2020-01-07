@@ -1,8 +1,7 @@
 package marsrover.api.handler.strategy
 
 import arrow.core.Option
-import arrow.core.rightIfNull
-import marsrover.domain.MarsRoverException
+import marsrover.domain.exception.MarsRoverException
 import marsrover.domain.model.MarsRover
 import kotlin.reflect.KFunction1
 

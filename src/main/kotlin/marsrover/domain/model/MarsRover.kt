@@ -1,27 +1,26 @@
 package marsrover.domain.model
 
-import marsrover.domain.value.Coordinate
-import marsrover.domain.value.DirectionType
-import marsrover.domain.value.asMapCoordinateOf
-
-data class MarsRover(var currentDirection: DirectionType,
-                     var currentPosition: Coordinate,
-                     val map: MarsRoverMap) {
+data class MarsRover(private var currentDirection: DirectionType,
+                     private var currentPosition: Coordinate,
+                     private val map: MarsRoverMap) {
     fun turnLeft() {
-        currentDirection = currentDirection.turnLeft()
+        currentDirection = currentDirection.left()
     }
 
     fun turnRight() {
-        currentDirection = currentDirection.turnRight()
+        currentDirection = currentDirection.right()
     }
 
     fun moveForward() {
-        val nextPosition = currentDirection.moveForwardFrom(currentPosition)
-        currentPosition = nextPosition.asMapCoordinateOf(this.map)
+        val nextPosition = currentDirection.forwardFrom(currentPosition)
+        currentPosition = map.calculateCoordinate(nextPosition)
     }
 
     fun moveBackward() {
-        val nextPosition = currentDirection.moveBackwardFrom(currentPosition)
-        currentPosition = nextPosition.asMapCoordinateOf(this.map)
+        val nextPosition = currentDirection.backwardFrom(currentPosition)
+        currentPosition = map.calculateCoordinate(nextPosition)
     }
+
+    fun currentPositionAsString(): String = "X:${currentPosition.xPoint}, Y:${currentPosition.yPoint}"
+    fun currentDirectionAsString(): String = "facing:${currentDirection.value}"
 }
