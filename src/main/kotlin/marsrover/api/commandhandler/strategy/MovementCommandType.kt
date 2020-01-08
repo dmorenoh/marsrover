@@ -1,4 +1,4 @@
-package marsrover.api.handler.strategy
+package marsrover.api.commandhandler.strategy
 
 import arrow.core.Option
 import marsrover.domain.exception.MarsRoverException

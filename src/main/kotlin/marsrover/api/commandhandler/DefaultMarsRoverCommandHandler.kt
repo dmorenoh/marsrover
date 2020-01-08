@@ -1,24 +1,20 @@
-package marsrover.api.handler
+package marsrover.api.commandhandler
 
-import marsrover.api.handler.strategy.MovementCommandType.Companion.movementInstructionOf
+import marsrover.api.commandhandler.strategy.MovementCommandType.Companion.movementInstructionOf
 import marsrover.domain.command.CreateMarsRoversCommand
 import marsrover.domain.command.MoveMarsRoverCommand
+import marsrover.domain.exception.MarsRoverException
 import marsrover.domain.model.MarsRover
 import marsrover.domain.repo.MarsRoverRepository
 
-class DefaultMarsRoverCommandHandler(var repository: MarsRoverRepository) : MarsRoverCommandHandler {
+class DefaultMarsRoverCommandHandler(private var repository: MarsRoverRepository) : MarsRoverCommandHandler {
 
     override fun on(command: MoveMarsRoverCommand) {
         val marsRover = repository.find()
-        movementInstructionOf(command.instruction)
-                .applyOver(marsRover!!)
+                .fold({ throw MarsRoverException("Mars rover not found!") }, { it })
 
-        println(String
-                .format(
-                        "Rover is at %s %s",
-                        marsRover.currentPositionAsString(),
-                        marsRover.currentDirectionAsString()
-                ))
+        movementInstructionOf(command.instruction)
+                .applyOver(marsRover)
     }
 
     override fun on(command: CreateMarsRoversCommand) {

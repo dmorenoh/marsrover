@@ -3,7 +3,7 @@ package marsrover.adapter
 import marsrover.adapter.dto.CoordinateValue
 import marsrover.adapter.dto.InitialMarsRoverValues
 import marsrover.adapter.dto.MapSizeValue
-import marsrover.api.handler.MarsRoverCommandHandler
+import marsrover.api.commandhandler.MarsRoverCommandHandler
 import marsrover.domain.command.CreateMarsRoversCommand
 import marsrover.domain.exception.MarsRoverException
 import marsrover.domain.model.*
@@ -54,6 +54,6 @@ class MarsRoverAdapterTest extends Specification {
                             new Area(new Size(MAX_X), new Size(MAX_Y)),
                             [new Coordinate(OBSTACLE_POS.positionX, OBSTACLE_POS.positionY)]),
                     new Coordinate(INITIAL_POS_VALUE.positionX, INITIAL_POS_VALUE.positionY),
-                    DirectionType.getEnum(SOUTH)))
+                    DirectionType.of(SOUTH)))
     }
 }

@@ -21,6 +21,11 @@ data class MarsRover(private var currentDirection: DirectionType,
         currentPosition = map.calculateCoordinate(nextPosition)
     }
 
-    fun currentPositionAsString(): String = "X:${currentPosition.xPoint}, Y:${currentPosition.yPoint}"
-    fun currentDirectionAsString(): String = "facing:${currentDirection.value}"
+    fun currentDirectionAsString(): String {
+        return currentDirection.name
+    }
+
+    fun currentPositionAsString(): String {
+        return currentPosition.toString()
+    }
 }

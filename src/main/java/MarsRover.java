@@ -4,13 +4,18 @@ import marsrover.adapter.MarsRoverAdapter;
 import marsrover.adapter.dto.CoordinateValue;
 import marsrover.adapter.dto.InitialMarsRoverValues;
 import marsrover.adapter.dto.MapSizeValue;
-import marsrover.api.handler.DefaultMarsRoverCommandHandler;
+import marsrover.api.commandhandler.DefaultMarsRoverCommandHandler;
+import marsrover.api.queryhandler.GetMarsRoverQueryHandler;
+import marsrover.domain.repo.MarsRoverRepository;
 import marsrover.infra.repo.InMemoryRepository;
 
 public class MarsRover
 {
-    private static MarsRoverAdapter marsRoverAdapter = new MarsRoverAdapter(new DefaultMarsRoverCommandHandler(new InMemoryRepository(null)));
+    private static MarsRoverRepository repo = new InMemoryRepository();
 
+    private static MarsRoverAdapter marsRoverAdapter = new MarsRoverAdapter(
+        new DefaultMarsRoverCommandHandler(repo),
+        new GetMarsRoverQueryHandler(repo));
 
     public static void main(String[] args)
     {
@@ -38,6 +43,7 @@ public class MarsRover
             String command = reader.next();
 
             marsRoverAdapter.moveMarsRover(command);
+            System.out.println(marsRoverAdapter.getMarsRovers());
         } while (true);
     }
 

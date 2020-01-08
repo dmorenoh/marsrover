@@ -1,16 +1,17 @@
 package marsrover.adapter
 
 import marsrover.adapter.dto.InitialMarsRoverValues
-import marsrover.api.handler.MarsRoverCommandHandler
+import marsrover.api.commandhandler.MarsRoverCommandHandler
+import marsrover.api.queryhandler.GetMarsRoverQueryHandler
 import marsrover.domain.command.MoveMarsRoverCommand
 
-class MarsRoverAdapter(private val handlerDefault: MarsRoverCommandHandler) {
+class MarsRoverAdapter(private val commandHandler: MarsRoverCommandHandler,
+                       private val queryHandler: GetMarsRoverQueryHandler) {
 
-    fun initializeMarsRover(initialMarsRoverValues: InitialMarsRoverValues) {
-        handlerDefault.on(initialMarsRoverValues.toCreateMarsRoversCommand())
-    }
+    fun initializeMarsRover(initialMarsRoverValues: InitialMarsRoverValues) =
+            commandHandler.on(initialMarsRoverValues.toCreateMarsRoversCommand())
 
-    fun moveMarsRover(command: String) {
-        handlerDefault.on(MoveMarsRoverCommand(command))
-    }
+    fun moveMarsRover(command: String) = commandHandler.on(MoveMarsRoverCommand(command))
+
+    fun getMarsRovers() = queryHandler.getMarsRover()
 }

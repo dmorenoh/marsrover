@@ -34,13 +34,9 @@ enum class DirectionType(private val value: String,
         return currentPosition - (addressedCoordinate)
     }
 
-    override fun toString(): String {
-        return value
-    }
-
     companion object {
         @JvmStatic
-        fun getEnum(value: String): DirectionType {
+        fun of(value: String): DirectionType {
             return Option.fromNullable(values()
                     .firstOrNull { it.value == value })
                     .fold({ throw MarsRoverException("Invalid direction!") }, { it })

@@ -1,4 +1,4 @@
-package marsrover.api.handler
+package marsrover.api.commandhandler
 
 import marsrover.domain.command.CreateMarsRoversCommand
 import marsrover.domain.command.MoveMarsRoverCommand

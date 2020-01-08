@@ -10,6 +10,6 @@ data class InitialMarsRoverValues(private val mapSizeValue: MapSizeValue,
     fun toCreateMarsRoversCommand() = CreateMarsRoversCommand(
             MarsRoverMap(this.mapSizeValue.toArea(), obstacleValues.toObstacles()),
             initialPosition.toCoordinate(),
-            DirectionType.getEnum(initialDirection)
+            DirectionType.of(initialDirection)
     )
 }
