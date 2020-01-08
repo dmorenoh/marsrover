@@ -40,13 +40,11 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
             subject.on(command)
 
         then: "save mars rover with command attributes"
-            1 * repository.save(_) >> {
-                arguments ->
-                    def marsRover = arguments[0] as MarsRover
-                    assert marsRover.currentPosition == INITIAL_POS
-                    assert marsRover.currentDirection == ANY_DIRECTION
-                    assert marsRover.map == ANY_MAP
-            }
+            1 * repository.save({ MarsRover marsRover ->
+                marsRover.currentPosition == INITIAL_POS
+                marsRover.currentDirection == ANY_DIRECTION
+                marsRover.map == ANY_MAP
+            })
     }
 
     def "should fail when non-valid instruction"() {
@@ -60,7 +58,7 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
         when: "request move mars rovers"
             subject.on(new MoveMarsRoverCommand(NON_VALID))
         then: "fails"
-            def ex = thrown(MarsRoverException)
+            MarsRoverException ex = thrown()
             ex.message == "Invalid instruction!"
     }
 
@@ -70,7 +68,7 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
         when: "request move mars rovers"
             subject.on(new MoveMarsRoverCommand(LEFT))
         then: "fails"
-            def ex = thrown(MarsRoverException)
+            MarsRoverException ex = thrown()
             ex.message == "Mars rover not found!"
     }
 
@@ -118,7 +116,7 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
             subject.on(new MoveMarsRoverCommand(movementInstruction))
 
         then: "fails and keeps position"
-            def ex = thrown(MarsRoverMapException)
+            MarsRoverMapException ex = thrown()
             ex.message == "Obstacle found in next position"
             marsRover.currentPosition == INITIAL_POS
 
