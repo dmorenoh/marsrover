@@ -104,6 +104,17 @@ Then:
    if arrives at one of the edges follow at the other side (Mars is a sphere after all)
 ```
 It has been considered in order to create [`DefaultMarsRoverCommandHandlerSpec`](https://github.com/dmorenoh/marsrover/blob/master/src/test/groovy/marsrover/api/commandhandler/DefaultMarsRoverCommandHandlerSpec.groovy)
+Please check this scenarios:
+- `def "should turn mars rover to #expecteDirection when initial direction is #currentDirection and requested to move to #movementInstruction"() `
+- `def "should move to #expectedPosition when mars rovers addressed to #direction attempts to move to #movementInstruction and initial position is #initialPosition"()`
+
+On the other hand, bonus about _obstacles_ has been implemented having as test coverage (in the same file) this scenario:
+- `def "should fail when mars rover attempts to move to #movementInstruction and there is an obstacle"()`
+
+In order to have a fancy way to check test results, reports has been provided. So, once you download the project, please check in:
+`build/reports/tests/test/classes/marsrover.api.commandhandler.DefaultMarsRoverCommandHandlerSpec.html`
+It should be recreated every time you execute Spock tests
+
 ## Technical debts
 Input validation when creating parameters to adapter
 
