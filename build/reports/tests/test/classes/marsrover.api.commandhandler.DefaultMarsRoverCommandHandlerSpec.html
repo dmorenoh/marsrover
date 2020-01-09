@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class marsrover.api.commandhandler.DefaultMarsRoverCommandHandlerSpec</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class marsrover.api.commandhandler.DefaultMarsRoverCommandHandlerSpec</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/marsrover.api.commandhandler.html">marsrover.api.commandhandler</a> &gt; DefaultMarsRoverCommandHandlerSpec</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">21</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.061s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">should fail when mars rover attempts to move to b and there is an obstacle</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should fail when mars rover attempts to move to f and there is an obstacle</td>
+<td class="success">0.013s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should fail when no marsRover found</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should fail when non-valid instruction</td>
+<td class="success">0.017s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should move to Coordinate(xPoint=0, yPoint=0) when mars rovers addressed to NORTH attempts to move to f and initial position is Coordinate(xPoint=0, yPoint=5)</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should move to Coordinate(xPoint=0, yPoint=0) when mars rovers addressed to SOUTH attempts to move to b and initial position is Coordinate(xPoint=0, yPoint=5)</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should move to Coordinate(xPoint=0, yPoint=1) when mars rovers addressed to NORTH attempts to move to f and initial position is Coordinate(xPoint=0, yPoint=0)</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should move to Coordinate(xPoint=0, yPoint=1) when mars rovers addressed to SOUTH attempts to move to b and initial position is Coordinate(xPoint=0, yPoint=0)</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should move to Coordinate(xPoint=0, yPoint=4) when mars rovers addressed to NORTH attempts to move to b and initial position is Coordinate(xPoint=0, yPoint=5)</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should move to Coordinate(xPoint=0, yPoint=4) when mars rovers addressed to SOUTH attempts to move to f and initial position is Coordinate(xPoint=0, yPoint=5)</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should move to Coordinate(xPoint=0, yPoint=5) when mars rovers addressed to NORTH attempts to move to b and initial position is Coordinate(xPoint=0, yPoint=0)</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should move to Coordinate(xPoint=0, yPoint=5) when mars rovers addressed to SOUTH attempts to move to f and initial position is Coordinate(xPoint=0, yPoint=0)</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should save new mars rover</td>
+<td class="success">0.009s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should turn mars rover to EAST when initial direction is NORTH and requested to move to r</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should turn mars rover to EAST when initial direction is SOUTH and requested to move to l</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should turn mars rover to NORTH when initial direction is EAST and requested to move to l</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should turn mars rover to NORTH when initial direction is WEST and requested to move to r</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should turn mars rover to SOUTH when initial direction is EAST and requested to move to r</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should turn mars rover to SOUTH when initial direction is WEST and requested to move to l</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should turn mars rover to WEST when initial direction is NORTH and requested to move to l</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">should turn mars rover to WEST when initial direction is SOUTH and requested to move to r</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 5.2.1</a> at Jan 9, 2020 12:11:11 PM</p>
+</div>
+</div>
+</body>
+</html>

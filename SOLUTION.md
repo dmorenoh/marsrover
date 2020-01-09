@@ -89,6 +89,21 @@ enum class DirectionType(
   };
 ```
 
+## Test evidence to be considered
+I've decided to keep the initial class `MarsRover.java` as input (port) point and focus on the core-domain solution. The way how this initial class communication with my api is through adapters (`MarsRoveAdapter`)
+Considering your initial test for main functional requirement 
+```
+Given:
+ - a map size of two dimensions for Mars
+ - the initial starting point and direction of the Rover
+When:
+ - a command is received
+   move `forward` or `backward` or rotate `left` or `right` (90 degrees)
+Then:
+ - move the Rover
+   if arrives at one of the edges follow at the other side (Mars is a sphere after all)
+```
+It has been considered in order to create [`DefaultMarsRoverCommandHandlerSpec`](https://github.com/dmorenoh/marsrover/blob/master/src/test/groovy/marsrover/api/commandhandler/DefaultMarsRoverCommandHandlerSpec.groovy)
 ## Technical debts
 Input validation when creating parameters to adapter
 

@@ -73,10 +73,10 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
     }
 
     @Unroll
-    def "should turn mars rover to #expecteDirection when current direction is #currentDirection and requested to move to #movementInstruction"() {
+    def "should turn mars rover to #expecteDirection when initial direction is #currentDirection and requested to move to #movementInstruction"() {
         given: "a mars rover"
             def marsRover = new MarsRover(
-                    of(currentDirection),
+                    currentDirection,
                     INITIAL_POS,
                     ANY_MAP)
             repository.find() >> Option.@Companion.just(marsRover)
@@ -85,19 +85,19 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
             subject.on(new MoveMarsRoverCommand(movementInstruction))
 
         then: "moved correctly"
-            marsRover.currentDirection == of(expecteDirection)
+            marsRover.currentDirection == expecteDirection
             marsRover.currentPosition == INITIAL_POS
 
         where:
             currentDirection | movementInstruction | expecteDirection
-            NORTH            | LEFT                | WEST
-            NORTH            | RIGHT               | EAST
-            SOUTH            | LEFT                | EAST
-            SOUTH            | RIGHT               | WEST
-            EAST             | LEFT                | NORTH
-            EAST             | RIGHT               | SOUTH
-            WEST             | LEFT                | SOUTH
-            WEST             | RIGHT               | NORTH
+            of(NORTH)        | LEFT                | of(WEST)
+            of(NORTH)        | RIGHT               | of(EAST)
+            of(SOUTH)        | LEFT                | of(EAST)
+            of(SOUTH)        | RIGHT               | of(WEST)
+            of(EAST)         | LEFT                | of(NORTH)
+            of(EAST)         | RIGHT               | of(SOUTH)
+            of(WEST)         | LEFT                | of(SOUTH)
+            of(WEST)         | RIGHT               | of(NORTH)
     }
 
     @Unroll
@@ -131,7 +131,7 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
         given: "map without obstacles"
             def mapWithObstacles = new MarsRoverMap(AREA_SIZE_5X5, Collections.emptyList())
         and: "mars rovers using such map"
-            def initialDirection = of(direction)
+            def initialDirection = direction
             def marsRover = new MarsRover(
                     initialDirection,
                     initialPosition,
@@ -147,13 +147,13 @@ class DefaultMarsRoverCommandHandlerSpec extends Specification {
             marsRover.currentDirection == initialDirection
         where:
             mapSize       | initialPosition      | direction | movementInstruction | expectedPosition
-            AREA_SIZE_5X5 | new Coordinate(0, 0) | NORTH     | FORWARD             | new Coordinate(0, 1)
-            AREA_SIZE_5X5 | new Coordinate(0, 0) | NORTH     | BACKWARD            | new Coordinate(0, 5)
-            AREA_SIZE_5X5 | new Coordinate(0, 5) | NORTH     | FORWARD             | new Coordinate(0, 0)
-            AREA_SIZE_5X5 | new Coordinate(0, 5) | NORTH     | BACKWARD            | new Coordinate(0, 4)
-            AREA_SIZE_5X5 | new Coordinate(0, 0) | SOUTH     | FORWARD             | new Coordinate(0, 5)
-            AREA_SIZE_5X5 | new Coordinate(0, 0) | SOUTH     | BACKWARD            | new Coordinate(0, 1)
-            AREA_SIZE_5X5 | new Coordinate(0, 5) | SOUTH     | FORWARD             | new Coordinate(0, 4)
-            AREA_SIZE_5X5 | new Coordinate(0, 5) | SOUTH     | BACKWARD            | new Coordinate(0, 0)
+            AREA_SIZE_5X5 | new Coordinate(0, 0) | of(NORTH) | FORWARD             | new Coordinate(0, 1)
+            AREA_SIZE_5X5 | new Coordinate(0, 0) | of(NORTH) | BACKWARD            | new Coordinate(0, 5)
+            AREA_SIZE_5X5 | new Coordinate(0, 5) | of(NORTH) | FORWARD             | new Coordinate(0, 0)
+            AREA_SIZE_5X5 | new Coordinate(0, 5) | of(NORTH) | BACKWARD            | new Coordinate(0, 4)
+            AREA_SIZE_5X5 | new Coordinate(0, 0) | of(SOUTH) | FORWARD             | new Coordinate(0, 5)
+            AREA_SIZE_5X5 | new Coordinate(0, 0) | of(SOUTH) | BACKWARD            | new Coordinate(0, 1)
+            AREA_SIZE_5X5 | new Coordinate(0, 5) | of(SOUTH) | FORWARD             | new Coordinate(0, 4)
+            AREA_SIZE_5X5 | new Coordinate(0, 5) | of(SOUTH) | BACKWARD            | new Coordinate(0, 0)
     }
 }
