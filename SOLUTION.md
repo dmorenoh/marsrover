@@ -6,10 +6,12 @@
 - **Api**: Or application layer, the one which orchestrates domain capabilities in order to achieve an specific use case: _CreateMarsRover_, _MoveMarsRover_,_GetMarsRover_
 - **Domain**: Where business logic is contained
 - **Infra**: Infrastructure details such as technical capabilities: in memory repo implementation for this case.
+
 **_Why this architecture?_**
-Intention of its usage  is to recreate an onion layering responsibilities. This implies layering dependencies in this direction: _domain->api->adapter_, being the domain isolated from api and api isolated from adapter, which means, agnostic of any client consumer. 
+ Intention of its usage  is to recreate an onion layering responsibilities. This implies layering dependencies in this direction: _domain->api->adapter_, being the domain isolated from api and api isolated from adapter, which means, agnostic of any client consumer. 
+
 **_What we gain with this?_**
- Scalability, modulability, and so on: Imagine at some point you need your application being consumed by a given rest endpoint (representing a new _port_ different than command line) which consumes data from a real db. In order to get this, it would only be required to create a new adapter for that rest client and define another repo implementing db connection 
+ Scalability, modulability, separation of concerns and so on: Imagine at some point you need your application being consumed by a given rest endpoint (representing a new _port_ different than command line) which consumes data from a real db. In order to get this, it would only be required to create a new adapter for that rest client and define another repo implementing db connection 
 
 ## Implementation
 ### Key points
@@ -24,6 +26,11 @@ TURN_RIGHT("r", MarsRover::turnRight),
 FORWARD("f", MarsRover::moveForward),  
 BACKWARD("b", MarsRover::moveBackward);
 ```
+
+## Tech tools
+- Kotlin (not so expert in this as in java but I wanted to give a try)
+- Spock for testing
+
 ###  Mars Rover direction
 - On the other side, mars rovers direction affects the way how a given instruction is performed. 
 
